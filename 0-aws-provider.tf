@@ -1,9 +1,16 @@
 provider "aws" {
   region = "eu-west-1"
-  version = "4.67.0"
+  # version = "4.67.0"
 }
 
 terraform {
+  backend "s3" {       # √ Terraform state store backend
+    bucket = "devopsengineersm-terraform-state-backend"
+    key = "terraform.tfstate"
+    region = "eu-west-1"
+    dynamodb_table = "terraform_state"
+
+  }
   required_providers {
     kubectl = {
       source  = "gavinbunney/kubectl" # √ This provider allows you to manage kubernetes resources by using yaml
@@ -15,5 +22,5 @@ terraform {
     }
   }
 
-#   required_version = "~> 1.0"
+  required_version = "~> 4.67.0"
 }
